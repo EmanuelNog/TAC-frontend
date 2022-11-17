@@ -1,0 +1,13 @@
+html{
+    background-color: black;
+}
+.layout{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.map {
+    height: 100vh;
+}
+.menu {
+    color:white
+}
