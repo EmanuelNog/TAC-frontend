@@ -8,8 +8,6 @@
 }
 
 body {
-  align-items: center;
-  display:flex;
   font: 400 14px Roboto, sans-serif;
   background: #f0f0f5;
   -webkit-font-smoothing: antialiased;

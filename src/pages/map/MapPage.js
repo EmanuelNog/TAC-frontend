@@ -22,8 +22,8 @@ export default function MapPage() {
 
     const onEdit = useCallback(()=> {
         if (polygonRef.current){
-            const nextPath = polygonRef.current.getPath().getArray().map(pathPostition => {
-                return {lat: pathPostition.lat(), lng: pathPostition.lng()}
+            const nextPath = polygonRef.current.getPath().getArray().map(pathPosition => {
+                return {lat: pathPosition.lat(), lng: pathPosition.lng()}
             })
             setPath(nextPath)
         }
@@ -53,31 +53,30 @@ export default function MapPage() {
             <button> inserir marcador</button>
         </div>
         <div className = "map">
-        {//isLoaded ? (
-            <LoadScript
-            id="script-loader"
-            googleMapsApiKey="AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
-            language="en"
-            region="us"
-            >
-                <GoogleMap
-                    mapContainerStyle = {{ width: "100%", height: "100%" }}
-                    center = {{ lat:-25.30035527665852, lng: -54.11496429483141 }}
-                    zoom = {16}
-                >
-                    <Polygon
-                    editable
-                    draggable
-                    path = {path}
-                    onMouseUp = {onEdit}
-                    onDragEnd = {onEdit}
-                    onLoad = {onLoad}
-                    onUnmount = {onUnmount}
-                    />
-                </GoogleMap>
-            </LoadScript>
-            //) : <></>
-            }
+            {isLoaded ? (
+                // <LoadScript
+                // id="script-loader"
+                // googleMapsApiKey="AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
+                // language="en"
+                // region="us"
+                // >
+                    <GoogleMap
+                        mapContainerStyle = {{ width: "100%", height: "100%" }}
+                        center = {{ lat:-25.30035527665852, lng: -54.11496429483141 }}
+                        zoom = {16}
+                    >
+                        <Polygon
+                        editable
+                        draggable
+                        path = {path}
+                        onMouseUp = {onEdit}
+                        onDragEnd = {onEdit}
+                        onLoad = {onLoad}
+                        onUnmount = {onUnmount}
+                        />
+                    </GoogleMap>
+                // </LoadScript>
+            ) : <></>}
         </div>
     </div>);
 };

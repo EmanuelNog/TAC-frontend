@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom';
-//import api from '../../services/api';
+import api from '../../services/api';
 
 import './login_styles.css'
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('email@gmail.com');
+    const [password, setPassword] = useState('123');
     const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault();
 
         try {
-            // const res = await api.post('session',{email,password});
-            // localStorage.setItem('userId',res.data.id);
+            const res = await api.post('login',{email,password});
+            localStorage.setItem('token',res.data.token);
             navigate('/map');
         }catch(err){
             alert(err);

@@ -14,8 +14,7 @@ export default function Register() {
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
 
-  // const history = useHistory();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleRegister(e) {
     e.preventDefault();
