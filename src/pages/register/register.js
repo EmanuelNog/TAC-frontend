@@ -10,9 +10,6 @@ export default function Register() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [city, setCity] = useState('');
-  const [uf, setUf] = useState('');
 
   const navigate = useNavigate();
 
@@ -22,20 +19,17 @@ export default function Register() {
     const data = {
       name,
       password,
-      email,
-      whatsapp,
-      city,
-      uf,
+      email
     };
 
     try {
-      await api.post('register', data);
+      await api.post('users', data);
 
       alert(`Voce foi cadastrado, por favor faca seu login.`);
 
-      navigate.push('/');
+      navigate('/');
     } catch (err) {
-      alert('Erro no cadastro, tente novamente.');
+      alert(err);
     }
   }
 
@@ -64,34 +58,12 @@ export default function Register() {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-
           <input
             type="email"
             placeholder="E-mail"
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-
-          <input
-            placeholder="WhatsApp"
-            value={whatsapp}
-            onChange={e => setWhatsapp(e.target.value)}
-          />
-
-          <div className="input-group">
-            <input
-              placeholder="Cidade"
-              value={city}
-              onChange={e => setCity(e.target.value)}
-            />
-
-            <input
-              placeholder="UF"
-              style={{ width: 80 }}
-              value={uf}
-              onChange={e => setUf(e.target.value)}
-            />
-          </div>
 
           <button className="button" type="submit">Cadastrar</button>
         </form>

@@ -1,8 +1,10 @@
 import React, { useState, useRef, useCallback } from "react";
 import { GoogleMap, useJsApiLoader,Polygon, LoadScript } from '@react-google-maps/api';
 import './MapPage.css'
+import api from "../../services/api";
 
 
+const token = localStorage.getItem('token');
 
 export default function MapPage() {
 
@@ -46,11 +48,31 @@ export default function MapPage() {
 
     console.log("The path state is", path)
 
+    async function recordPath() {
+        // e.preventDefault();
+        const pathString = JSON.stringify(path);
+        const data = {
+            type_area: "tipo",
+            geoloc: pathString
+         };
+
+        try {
+            await api.post('users/1/areas', data,{
+                headers:{
+                    token:token,
+                }
+            });
+            alert(`Area sucessfully registered`);
+        } catch (err) {
+            alert(err);
+        }
+    }
+
     return (
     <div className="layout">
         <div className="menu">
             <h1>texto</h1>
-            <button> inserir marcador</button>
+            <button onClick={recordPath}> path </button>
         </div>
         <div className = "map">
             {isLoaded ? (
