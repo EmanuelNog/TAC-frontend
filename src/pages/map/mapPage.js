@@ -1,18 +1,27 @@
 import React, { useState, useRef, useCallback } from "react";
 import { GoogleMap, useJsApiLoader,Polygon, LoadScript } from '@react-google-maps/api';
-import './MapPage.css'
+import {Link, useNavigate, useLocation} from "react-router-dom"
+import './mapPage.css'
 import api from "../../services/api";
 
 
-const token = localStorage.getItem('token');
 
 export default function MapPage() {
+
+    const token = localStorage.getItem('token')
+    const navigate = useNavigate()
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
     })
 
+    const {state} = useLocation()
+    const {area} = state
+    const parsePath = JSON.parse(area.geoloc)
+    // console.log(parsePath)
+
+    // const [path, setPath] = useState(parsePath)
     const [path, setPath] = useState([
         {lat: -25.297019, lng: -54.116402},
         {lat: -25.301738, lng: -54.117491},
@@ -31,7 +40,7 @@ export default function MapPage() {
         }
     }, [setPath])
 
-    const onLoad = useCallback( polygon => {
+    const onLoad = useCallback( (polygon) => {
         polygonRef.current = polygon
         const path = polygon.getPath()
         listenersRef.current.push(
@@ -46,42 +55,27 @@ export default function MapPage() {
         polygonRef.current = null;
     }, [])
 
-    console.log("The path state is", path)
+    // function handleReturn(){
+    //     navigate("/usermaplist")
+    // }
 
-    async function recordPath() {
-        // e.preventDefault();
-        const pathString = JSON.stringify(path);
-        const data = {
-            type_area: "tipo",
-            geoloc: pathString
-         };
-
-        try {
-            await api.post('users/1/areas', data,{
-                headers:{
-                    token:token,
-                }
-            });
-            alert(`Area sucessfully registered`);
-        } catch (err) {
-            alert(err);
-        }
-    }
+    console.log("The path state is", path);
 
     return (
     <div className="layout">
         <div className="menu">
-            <h1>texto</h1>
-            <button onClick={recordPath}> path </button>
+            <Link className="back-link" to="/usermaplist">
+                Retornar
+            </Link>
         </div>
         <div className = "map">
-            {isLoaded ? (
-                // <LoadScript
-                // id="script-loader"
-                // googleMapsApiKey="AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
-                // language="en"
-                // region="us"
-                // >
+            {/* {isLoaded ? ( */}
+                <LoadScript
+                id="script-loader"
+                googleMapsApiKey="AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
+                language="en"
+                region="us"
+                >
                     <GoogleMap
                         mapContainerStyle = {{ width: "100%", height: "100%" }}
                         center = {{ lat:-25.30035527665852, lng: -54.11496429483141 }}
@@ -97,8 +91,8 @@ export default function MapPage() {
                         onUnmount = {onUnmount}
                         />
                     </GoogleMap>
-                // </LoadScript>
-            ) : <></>}
+                </LoadScript>
+             {/* ) : <></> } */}
         </div>
     </div>);
 };
