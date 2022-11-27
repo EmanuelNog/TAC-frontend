@@ -16,7 +16,7 @@ export default function Login() {
             const res = await api.post('login',{email,password});
             localStorage.setItem('userId',res.data.userId)
             localStorage.setItem('token',res.data.token);
-            navigate('/usermaplist');
+            navigate('/menu');
         }catch(err){
             alert(err);
         }
