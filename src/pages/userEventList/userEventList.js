@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from 'react-router-dom';
-import './userDeviceList.css'
+import './userEventList.css'
 import api from "../../services/mongo/api";
 
-export default function UserDeviceList() {
+export default function UserEventList() {
 
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('userId')
     const navigate = useNavigate()
 
-    const [devices, setDevices] = useState([])
+    const [measurements, setMeasurements] = useState([])
 
     useEffect(() => {
-        api.get(`device`,{
+        api.get(`measurement/user/${userId}`,{
             headers:{
                 token: token
             }
         }).then(res => {
-            setDevices(res.data)
+            setMeasurements(res.data)
             console.log(res.data)
         })
     },[userId])
+    // ^ tirar esse userId pra ver oq da
 
-    async function handleDelete(deviceId){
+    async function handleDelete(measurementId){
         try{
-          await api.delete(`device/${deviceId}`,{
+          await api.delete(`measurement/${measurementId}`,{
             headers:{
                 token:token
             }
@@ -34,25 +35,22 @@ export default function UserDeviceList() {
         }
     }
 
-    function handleShowDevice(area){
-        navigate('/map',{state:{area:area}})
-    }
 
     return (
     <div className="layout">
         <div>
-            <h1> Dispositivos</h1>
-            <Link className="newDevice" to="/deviceregister">
+            <h1> Eventos - Medicoes </h1>
+            <Link className="newDevice" to="/eventregister">
                 Incluir Novo
             </Link>
         </div>
         <ul>
-            {devices.map(device =>(
+            {measurements.map(measurement =>(
                 <div>
-                <li key={device._id}>
-                    <h2>{device.name}</h2>
-                    <h5>{device.description}</h5>
-                    <button onClick={() => handleDelete(device._id)} type="button">
+                <li key={measurement._id}>
+                    <h2>{measurement.name}</h2>
+                    <h5>{measurement.measurements}</h5>
+                    <button onClick={() => handleDelete(measurement._id)} type="button">
                         Deletar
                     </button>
                 </li>

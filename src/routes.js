@@ -9,6 +9,8 @@ import UserMapList from './pages/userMapList/userMapList';
 import MapRegister from './pages/mapRegister/mapRegister';
 import UserDeviceList from './pages/userDeviceList/userDeviceList';
 import DeviceRegister from './pages/deviceRegister/deviceRegister';
+import UserEventList from './pages/userEventList/userEventList';
+import EventRegister from './pages/eventRegister/eventRegister';
 import Test from './pages/test/test';
 
 
@@ -24,6 +26,8 @@ export default function RoutingTable(){
                 <Route path="/mapregister" exact element={<MapRegister/>}/>
                 <Route path="/userdevicelist" exact element={<UserDeviceList/>}/>
                 <Route path="/deviceregister" exact element={<DeviceRegister/>}/>
+                <Route path="/usereventlist" exact element={<UserEventList/>}/>
+                <Route path="/eventregister" exact element={<EventRegister/>}/>
                 <Route path="/test" exact element={<Test/>}/>
             </Routes>
         </BrowserRouter>
