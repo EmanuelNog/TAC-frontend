@@ -13,7 +13,7 @@ export default function MapPage() {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyAg8uN-IuxElu3eXXOxp10hN0rQzsfupPk"
+        googleMapsApiKey: ""
     })
 
     const {state} = useLocation()
